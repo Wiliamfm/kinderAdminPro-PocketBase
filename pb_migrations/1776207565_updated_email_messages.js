@@ -1,0 +1,20 @@
+/// <reference path="../pb_data/types.d.ts" />
+migrate((app) => {
+  const collection = app.findCollectionByNameOrId("pbc_4153373768")
+
+  // update collection data
+  unmarshal({
+    "updateRule": "@request.auth.roles:each = \"father\" || @request.auth.roles ?= \"admin\" || @request.auth.is_admin = true"
+  }, collection)
+
+  return app.save(collection)
+}, (app) => {
+  const collection = app.findCollectionByNameOrId("pbc_4153373768")
+
+  // update collection data
+  unmarshal({
+    "updateRule": "@request.auth.roles ?= \"admin\" || @request.auth.is_admin = true"
+  }, collection)
+
+  return app.save(collection)
+})
